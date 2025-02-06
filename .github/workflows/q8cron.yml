@@ -1,24 +1,26 @@
-name: tds ga4 q8
+name: Daily Repository Update
 
 on:
   schedule:
-    - cron: '30 18 * * *'
-  workflow_dispatch: {}
+    - cron: "30 2 * * *"  # Runs daily at 02:30 UTC
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  tds-ga4-q8:
+  update-repo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 21f1002409@ds.study.iitm.ac.in
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create timestamp file
+      - name: Make a change
         run: |
-          echo "Daily update: $(date)" >> update_log.txt
-      
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'Daily automated update'
-          branch: main
+          echo "Last updated on $(date)" > last-updated.txt
+
+      - name: 21f1002409@ds.study.iitm.ac.in
+        run: |
+          git config --global user.name "21f1002409"
+          git config --global user.email "21f1002409@ds.study.iitm.ac.in"
+          git add last-updated.txt
+          git commit -m "Automated daily update - $(date)"
+          git push
