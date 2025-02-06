@@ -2,9 +2,7 @@ name: tds ga4 q8
 
 on:
   schedule:
-    # Runs at 00:00 UTC every day
-    - cron: "20 13 * * *"
-  workflow_dispatch: # Allow manual triggers
+    - cron: '30 18 * * *'
 
 jobs:
   tds-ga4-q8:
@@ -12,4 +10,15 @@ jobs:
 
     steps:
       - name: 21f1002409@ds.study.iitm.ac.in
+        uses: actions/checkout@v4
         run: echo "Hello, world!"
+
+      - name: Create timestamp file
+        run: |
+          echo "Daily update: $(date)" >> update_log.txt
+      
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Daily automated update'
+          branch: main
