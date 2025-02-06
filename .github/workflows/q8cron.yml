@@ -3,7 +3,7 @@ name: tds ga4 q8
 on:
   schedule:
     # Runs at 00:00 UTC every day
-    - cron: "20 13 * * * echo 21f1002409 > cronq8"
+    - cron: "20 13 * * *"
   workflow_dispatch: # Allow manual triggers
 
 jobs:
