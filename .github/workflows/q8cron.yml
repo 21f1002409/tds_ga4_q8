@@ -1,0 +1,15 @@
+name: tds ga4 q8
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: "0 0 * * *"
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  tds-ga4-q8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 21f1002409@ds.study.iitm.ac.in
+        run: echo "Hello, world!"
