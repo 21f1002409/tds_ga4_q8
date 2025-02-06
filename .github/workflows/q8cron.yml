@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: 21f1002409@ds.study.iitm.ac.in
         uses: actions/checkout@v4
-        run: echo "Hello, world!"
 
       - name: Create timestamp file
         run: |
