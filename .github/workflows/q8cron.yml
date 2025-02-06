@@ -3,6 +3,7 @@ name: tds ga4 q8
 on:
   schedule:
     - cron: '30 18 * * *'
+  workflow_dispatch: {}
 
 jobs:
   tds-ga4-q8:
