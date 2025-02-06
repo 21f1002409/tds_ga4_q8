@@ -2,25 +2,29 @@ name: Daily Repository Update
 
 on:
   schedule:
-    - cron: "30 2 * * *"  # Runs daily at 02:30 UTC
-  workflow_dispatch:  # Allows manual triggering of the workflow
+    - cron: '30 18 * * *'  # 18:30 UTC = 00:00 IST (next day)
 
 jobs:
-  update-repo:
+  automated-commit:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write  # Required for pushing changes
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Make a change
-        run: |
-          echo "Last updated on $(date)" > last-updated.txt
-
       - name: 21f1002409@ds.study.iitm.ac.in
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # Crucial for write access
+          fetch-depth: 0
+
+      - name: Create timestamp file
         run: |
-          git config --global user.name "21f1002409"
-          git config --global user.email "21f1002409@ds.study.iitm.ac.in"
-          git add last-updated.txt
-          git commit -m "Automated daily update - $(date)"
-          git push
+          echo "Daily update: $(date -u)" >> update_log.txt
+          git config user.name "21f1002409"
+          git config user.email "21f1002409@ds.study.iitm.ac.in"
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Daily automated update'
+          branch: main
+          commit_author: 'DevSync Bot <21f1002409@ds.study.iitm.ac.in>'
